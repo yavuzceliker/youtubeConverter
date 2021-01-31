@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="title" content="Youtube Converter | youtube.yavuzceliker.com.tr">
+    <meta name="keywords" content="youtube-to-mp3,youtube-to-video,youtube,youtube converter,youtube download,youtube mp3,youtube indir,mp3 convert,youtube dönüştürücü">
+
+    <meta name="description" content="Youtube videolarını mp3 veya video olarak indirmeye olanak sağlıyor.">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta name="author" content="Yavuz ÇELİKER">
+    <link rel="icon" type="image/png" href="/assets/images/logo.png" />
+    <title>Youtube Converter | Yavuz ÇELİKER</title>
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+    <style>
+
+        .prsm img {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+
+        * {
+            -ms-overflow-style: none;
+        }
+    </style>
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <div class="container">
+        <div class="nav-scroller  py-1 mb-2">
+            <!--Navbar -->
+            <nav class="navbar fixed-top bg-dark justify-content-center scrolling-navbar navbar-expand-lg navbar-dark ">
+                <a class="navbar-brand" href="/">
+                    <img src="~/Assets/Images/logo.png" height="50" title="yavuzceliker.com.tr" alt="yavuzceliker.com.tr">
+                </a>
+            </nav>
+            <!--/.Navbar -->
+        </div>
+        <main role="main" class="container mb-5 mt-5 pt-5">
+
+            <div class="row">
+                <div class=" col-md-12 blog-main">
+                    <h1 class="pb-3 mb-4 font-italic border-bottom">
+                        Youtube Video Converter
+                    </h1>
+
+                    <div class="container mb-5 youtubecontainer">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-6">
+                                <label class="control-label">Video Linki</label>
+                                <input class="form-control " id="videoID" type="text" value="@ViewBag.videoID" placeholder="Youtube video linkini giriniz." />
+                                <button type="button" value="mp3" class="btn btn-primary w-100 ml-0 indir"><h6 class="mb-0"><i class="fas fa-cloud-download-alt mr-2"></i> MP3'e Dönüştür</h6></button>
+                                <button type="button" value="videos" class="btn btn-success w-100 ml-0 indir"><h6 class="mb-0"><i class="fas fa-cloud-download-alt  mr-2"></i> Videoya Dönüştür</h6></button>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="son-tab" data-toggle="tab" href="#son" role="tab" aria-controls="son"
+                                           aria-selected="true">En Son 5 Video</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="cok-tab" data-toggle="tab" href="#cok" role="tab" aria-controls="cok"
+                                           aria-selected="false">En İyi 5 Video</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="son" role="tabpanel" aria-labelledby="son-tab">
+                                        @Html.Raw(ViewBag.latestConvertedList)
+                                    </div>
+                                    <div class="tab-pane fade" id="cok" role="tabpanel" aria-labelledby="cok-tab">
+                                        @Html.Raw(ViewBag.mostDownloadedList)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+                    <div class="modal fade" id="youtubeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalBaslik"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12" id="youtubeThumb"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" id="youtubeButonlar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer class="page-footer font-small bg-dark darken-3 text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 py-5">
+                    <div class="mb-5 flex-center">
+                        <a href="http://www.facebook.com/" class="fb-ic">
+                            <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                        </a>
+                        <a href="http://www.twitter.com/yavuzcelikerctr" class="tw-ic">
+                            <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                        </a>
+                        <a href="http://www.instagram.com/yavuzceliker.com.tr" class="ins-ic">
+                            <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                        </a>
+                        <a href="https://www.GitHub.com/yavuzceliker" class="pin-ic">
+                            <i class="fab fa-github fa-lg white-text fa-2x"> </i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright text-center py-3">
+            © @DateTime.UtcNow.AddHours(3).Year :
+            <a href="https://yavuzceliker.com.tr">Yavuz ÇELİKER</a>
+        </div>
+    </footer>
+
+    <div id='yukleniyor' style="width:100%;height:100%;position:fixed; z-index:10000; top:0;left:0; background:gray url('/Assets/Images/gif.gif') no-repeat center; "></div>
+
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var urlVideoID = "@ViewBag.videoID";
+            if (urlVideoID != "")
+            {
+                convert(urlVideoID, "mp3");
+            }
+            else
+                $("#yukleniyor").hide();
+        });
+    </script>
+
+    <script>
+        $(".indir").click(function () {
+            
+            var videoIDIndir = $("#videoID").val();
+            var convertTypeIndir = $(this).val();
+            convert(videoIDIndir, convertTypeIndir);
+        });
+
+
+        function convert(videoID,convertType) {
+            if (videoID == "") {
+                alert("Video linki zorunludur.");
+                return;
+            }
+
+            var start = videoID.indexOf("?v=") + 3;
+            if (start > 3)
+                videoID = videoID.substring(start, start + 11);
+
+            start = videoID.indexOf("https://youtu.be/") + 17;
+            if (start >= 17)
+                videoID = videoID.substring(start, start + 11);
+
+
+            $("#yukleniyor").show();
+            $.ajax(
+                {
+                    url: '/youtube/' + videoID + "/" + convertType,
+                    type: 'get',
+                    success: function (data) {
+
+                        if (data.length == 1) {
+                            $("#yukleniyor").hide();
+                            alert(data);
+                        }
+                        if (data.length == 3) {
+
+                            var title = "<h3>" + data[0] + "</h3>";
+                            var thumb = "<img src='" + data[1] + "' class='img-fluid' >";
+                            var buttons = data[2];
+                            $("#youtubeThumb").html(thumb);
+                            $("#modalBaslik").html(title);
+                            $("#youtubeButonlar").html(buttons);
+                            $("#yukleniyor").hide();
+                            $('#youtubeModal').modal('show');
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+
+                        $("#yukleniyor").hide();
+                        alert("Bir hata oluştu.\nHata kodu:" + xhr.status + "\nHata:" + thrownError);
+                    }
+                });
+
+        }
+    </script>
+
+</body>
+</html>
+
