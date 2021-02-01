@@ -30,7 +30,7 @@ namespace youtube_mp3_video_converter.Controllers
                                     "<div class='col-3'>" +
                                         "<img src='" + video.thumbnail_url + "' style='width:100%;height:100%;object-fit:contain;' />" +
                                     "</div>" +
-                                    "<div class='col-9'><i style='font-size:12px; color:black;'>" + video.convertDate.ToString("dd.MM.yyyy HH:mm:ss")+"</i><p>" + (video.title.Length>40?video.title.Substring(0,50)+"...":video.title) + "</p></div>" +
+                                    "<div class='col-9'><i style='font-size:12px; color:black;'>" + video.convertDate.ToString("dd.MM.yyyy HH:mm:ss")+"</i><p>" + (video.title.Length>40?video.title.Substring(0,40)+"...":video.title) + "</p></div>" +
                                 "</div>" +
                             "</a>" +
                         "</div>";
@@ -46,7 +46,7 @@ namespace youtube_mp3_video_converter.Controllers
                                 "<div class='col-3'>" +
                                     "<img src='" + video.thumbnail_url + "' style='width:100%;height:100%;object-fit:contain;' />" +
                                 "</div>" +
-                                "<div class='col-9'><i style='font-size:12px; color:black;'>" + videoList.Count(x=>x.videoId== item.Key)+" Kez İndirildi</i><p>" + (video.title.Length>40?video.title.Substring(0,50)+"...":video.title) + "</p></div>" +
+                                "<div class='col-9'><i style='font-size:12px; color:black;'>" + videoList.Count(x=>x.videoId== item.Key)+" Kez İndirildi</i><p>" + (video.title.Length>40?video.title.Substring(0,40)+"...":video.title) + "</p></div>" +
                             "</div>" +
                         "</a>" +
                     "</div>";
@@ -54,10 +54,10 @@ namespace youtube_mp3_video_converter.Controllers
             return View();
         }
 
-        [Route("youtube/{videoID}/{convertType}")]
-        public JsonResult Youtube(string videoID, string convertType)
+        [Route("youtube")]
+        public JsonResult Youtube(string videoID, string convertIDs)
         {
-            if (videoID == null || convertType == null)
+            if (videoID == null || convertIDs == null)
                 return Json(new string[] { "Boş alan bırakmayınız." }, JsonRequestBehavior.AllowGet);
 
             HttpClient client = new HttpClient();
@@ -89,26 +89,9 @@ namespace youtube_mp3_video_converter.Controllers
                     }
                 }
 
-                data = client.GetStringAsync("https://www.yt-download.org/api/button/" + convertType + "/" + videoID);
-
-                data.Wait();
-
-
-                string htmlContent = data.Result;
-                int start = htmlContent.IndexOf("https://www.yt-download.org/download/");
-                int end = htmlContent.IndexOf("/0\" class=\"");
-                List<string> list = new List<string>();
-                while (start >= 1)
-                {
-                    string kontrol = htmlContent.Substring(start, end - start);
-                    list.Add(kontrol + "/0");
-                    htmlContent = htmlContent.Substring(end + 11);
-                    start = htmlContent.IndexOf("https://www.yt-download.org/download/");
-                    end = htmlContent.IndexOf("/0\" class=\"");
-                }
-
+                
                 string buttons = "";
-                foreach (var item in list.OrderByDescending(x => x).ToArray())
+                foreach (var item in convertIDs.Split(','))
                 {
                     string[] items = item.Split('/');
                     if (items[5] == "mp3")
@@ -137,7 +120,6 @@ namespace youtube_mp3_video_converter.Controllers
                     }
 
                 }
-                buttons += "</div>";
 
                 content.videoId = videoID;
                 content.convertDate = DateTime.Now;

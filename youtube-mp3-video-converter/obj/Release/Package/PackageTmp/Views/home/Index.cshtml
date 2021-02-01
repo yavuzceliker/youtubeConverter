@@ -96,7 +96,7 @@
                         </div>
 
 
-
+                        <div id="test"></div>
 
 
                     </div>
@@ -122,8 +122,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </main>
@@ -157,82 +155,26 @@
 
     <div id='yukleniyor' style="width:100%;height:100%;position:fixed; z-index:10000; top:0;left:0; background:gray url('/Assets/Images/gif.gif') no-repeat center; "></div>
 
+
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+    <script type="text/javascript" src="~/Assets/Scripts/script.js"></script>
 
     <script>
-        $(document).ready(function () {
-            var urlVideoID = "@ViewBag.videoID";
-            if (urlVideoID != "")
-            {
-                convert(urlVideoID, "mp3");
-            }
-            else
-                $("#yukleniyor").hide();
-        });
+
+$(document).ready(function () {
+    var urlVideoID = "@ViewBag.videoID";
+    if (urlVideoID != "") {
+        convert(urlVideoID, "mp3");
+    }
+    else
+        $("#yukleniyor").hide();
+});
     </script>
-
-    <script>
-        $(".indir").click(function () {
-            
-            var videoIDIndir = $("#videoID").val();
-            var convertTypeIndir = $(this).val();
-            convert(videoIDIndir, convertTypeIndir);
-        });
-
-
-        function convert(videoID,convertType) {
-            if (videoID == "") {
-                alert("Video linki zorunludur.");
-                return;
-            }
-
-            var start = videoID.indexOf("?v=") + 3;
-            if (start > 3)
-                videoID = videoID.substring(start, start + 11);
-
-            start = videoID.indexOf("https://youtu.be/") + 17;
-            if (start >= 17)
-                videoID = videoID.substring(start, start + 11);
-
-
-            $("#yukleniyor").show();
-            $.ajax(
-                {
-                    url: '/youtube/' + videoID + "/" + convertType,
-                    type: 'get',
-                    success: function (data) {
-
-                        if (data.length == 1) {
-                            $("#yukleniyor").hide();
-                            alert(data);
-                        }
-                        if (data.length == 3) {
-
-                            var title = "<h3>" + data[0] + "</h3>";
-                            var thumb = "<img src='" + data[1] + "' class='img-fluid' >";
-                            var buttons = data[2];
-                            $("#youtubeThumb").html(thumb);
-                            $("#modalBaslik").html(title);
-                            $("#youtubeButonlar").html(buttons);
-                            $("#yukleniyor").hide();
-                            $('#youtubeModal').modal('show');
-                        }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-
-                        $("#yukleniyor").hide();
-                        alert("Bir hata oluştu.\nHata kodu:" + xhr.status + "\nHata:" + thrownError);
-                    }
-                });
-
-        }
-    </script>
-
 </body>
 </html>
 

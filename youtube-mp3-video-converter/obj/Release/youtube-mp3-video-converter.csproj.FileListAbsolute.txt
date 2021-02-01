@@ -75,3 +75,4 @@ C:\Users\yavuz\Desktop\projeler\asp.net\mvc\youtube-mp3-video-converter\youtube-
 C:\Users\yavuz\Desktop\projeler\asp.net\mvc\youtube-mp3-video-converter\youtube-mp3-video-converter\obj\Release\youtube-mp3-video-converter.csproj.CopyComplete
 C:\Users\yavuz\Desktop\projeler\asp.net\mvc\youtube-mp3-video-converter\youtube-mp3-video-converter\obj\Release\youtube-mp3-video-converter.dll
 C:\Users\yavuz\Desktop\projeler\asp.net\mvc\youtube-mp3-video-converter\youtube-mp3-video-converter\obj\Release\youtube-mp3-video-converter.pdb
+C:\Users\yavuz\Desktop\projeler\asp.net\mvc\youtube-mp3-video-converter\youtube-mp3-video-converter\obj\Release\youtube-mp3-video-converter.csprojAssemblyReference.cache

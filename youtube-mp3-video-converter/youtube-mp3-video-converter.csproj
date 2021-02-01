@@ -135,6 +135,7 @@
   <ItemGroup>
     <Content Include="Assets\Images\gif.gif" />
     <Content Include="Assets\Images\logo.png" />
+    <Content Include="Assets\Scripts\script.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
